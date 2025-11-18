@@ -1,9 +1,9 @@
 # Project Configuration
-project_id = "gke-111111"
+project_id = "myproject-non-prod"
 region     = "us-central1"
 
 # Project information
-project_name = "gke-111111"
+project_name = "myproject-non-prod"
 environment  = "dev"
 
 # App Engine (if required for Firestore)
@@ -18,6 +18,6 @@ create_sample_indexes         = true
 
 # Labels for resource management
 labels = {
-  project     = "gke-111111"
+  project     = "myproject-non-prod"
   environment = "dev"
 }
