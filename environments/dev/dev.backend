@@ -1,0 +1,2 @@
+bucket = "rateautomation-dev-us-central1-terraform-state"
+prefix = "dev/firestore/rateauto-firestore-dev-1/terraform.tfstate"
