@@ -1,2 +1,2 @@
-bucket = "gke-111111-dev-us-central1-terraform-state"
+bucket = "myproject-dev-us-central1-terraform-state"
 prefix = "dev/firestore/firestore-dev/terraform.tfstate"
