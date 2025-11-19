@@ -11,7 +11,6 @@ on:
   #     - '**/*.tfvars'
   #     - 'environments/**'
   #     - '.github/workflows/firestore.yaml'
-
   # pull_request:
   #   branches:
   #     - main
@@ -21,7 +20,6 @@ on:
   #     - '**/*.tfvars'
   #     - 'environments/**'
   #     - '.github/workflows/firestore.yaml'
-
 workflow_dispatch:
   inputs:
     environment:
@@ -33,7 +31,6 @@ workflow_dispatch:
         - dev
         - stage
         - prod
-
     action:
       description: 'Terraform action to perform'
       required: true
@@ -45,6 +42,7 @@ workflow_dispatch:
         - destroy
 
 env:
+  PROJECT_ID: myproject-non-prod
   TF_VERSION: '1.9.0'
   # Using Workload Identity Fedreration Instead of Service Account keys
   WORKLOAD_IDENTITY_PROVIDER: 'principal://iam.googleapis.com/projects/166457981312/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions'
@@ -53,7 +51,7 @@ env:
 jobs:
   terraform-plan:
     name: 'Terraform Plan'
-    runs-on: uhg-runner
+    runs-on: ubuntu-latest
     # Only manual workflow dispatch with plan action
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'plan'
 
@@ -104,7 +102,7 @@ jobs:
 
   terraform-apply:
     name: 'Terraform Apply'
-    runs-on: uhg-runner
+    runs-on: ubuntu-latest
     # Only manual workflow dispatch with apply action
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'apply'
 
@@ -137,27 +135,27 @@ jobs:
       - name: Enable Required APIs
         run: |
           echo "Enabling required Google Cloud APIs..."
-          gcloud services enable firestore.googleapis.com --project=qxnzmveb-6f2k-us52-0dzz-blqcr || echo "Firestore API already enabled or insufficient permissions"
-          gcloud services enable appengine.googleapis.com --project=qxnzmveb-6f2k-us52-0dzz-blqcr || echo "App Engine API already enabled or insufficient permissions"
+          gcloud services enable firestore.googleapis.com --project=myproject-non-prod || echo "Firestore API already enabled or insufficient permissions"
+          gcloud services enable appengine.googleapis.com --project=myproject-non-prod || echo "App Engine API already enabled or insufficient permissions"
 
       - name: Create App Engine Application (if needed)
         run: |
           echo "Checking if App Engine application exists..."
-          if gcloud app describe --project=qxnzmveb-6f2k-us52-0dzz-blqcr &>/dev/null; then
+          if gcloud app describe --project=myproject-non-prod &>/dev/null; then
             echo "App Engine application already exists"
           else
             echo "Creating App Engine application..."
-            gcloud app create --region=us-central --project=qxnzmveb-6f2k-us52-0dzz-blqcr || echo "Failed to create App Engine app or insufficient permissions"
+            gcloud app create --region=us-central --project=myproject-non-prod || echo "Failed to create App Engine app or insufficient permissions"
           fi
 
       - name: Create Firestore Database (if needed)
         run: |
           echo "Checking if Firestore database exists..."
-          if gcloud firestore databases describe ${{ github.event.inputs.environment == 'dev' && 'rateauto-firestore-dev' || github.event.inputs.environment == 'stage' && 'rateauto-firestore-stage' || 'rateauto-firestore-prod' }}  --project=qxnzmveb-6f2k-us52-0dzz-blqcr &>/dev/null; then
+          if gcloud firestore databases describe ${{ github.event.inputs.environment == 'dev' && 'firestore-dev' || github.event.inputs.environment == 'stage' && 'firestore-stage' || 'firestore-prod' }}  --project=myproject-non-prod &>/dev/null; then
             echo "Firestore database already exists"
           else
             echo "Creating Firestore database..."
-            gcloud firestore databases create  --database=${{ github.event.inputs.environment == 'dev' && 'rateauto-firestore-dev' || github.event.inputs.environment == 'stage' && 'rateauto-firestore-stage' || 'rateauto-firestore-prod' }}  --location=us-central1  --type=firestore-native  --project=qxnzmveb-6f2k-us52-0dzz-blqcr || echo "Failed to create Firestore database or insufficient permissions"
+            gcloud firestore databases create  --database=${{ github.event.inputs.environment == 'dev' && 'firestore-dev' || github.event.inputs.environment == 'stage' && 'firestore-stage' || 'firestore-prod' }}  --location=us-central1  --type=firestore-native  --project=myproject-non-prod || echo "Failed to create Firestore database or insufficient permissions"
           fi
 
       - name: Terraform Init
