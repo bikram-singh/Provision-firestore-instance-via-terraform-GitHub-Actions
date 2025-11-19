@@ -1,125 +1,142 @@
-# Project information
+# Project Information
 output "project_id" {
   description = "The GCP project ID"
   value       = var.project_id
 }
 
 output "region" {
-  description = "The region"
+  description = "The GCP region"
   value       = var.region
 }
 
-# App Engine information
+# App Engine Information
 output "app_engine_application_id" {
   description = "The App Engine application ID"
-  value       = var.create_app_engine && length(google_app_engine_application.app) > 0 ?
-                google_app_engine_application.app[0].app_id : null
+  value       = var.create_app_engine && length(google_app_engine_application.app) > 0 ? google_app_engine_application.app[0].app_id : null
 }
 
 output "app_engine_location" {
-  description = "The App Engine application region"
-  value       = var.create_app_engine && length(google_app_engine_application.app) > 0 ?
-                google_app_engine_application.app[0].location_id : null
+  description = "The App Engine application location"
+  value       = var.create_app_engine && length(google_app_engine_application.app) > 0 ? google_app_engine_application.app[0].location_id : null
 }
 
-output "app_engine_url_dispatch" {
-  description = "App Engine URL dispatch rule"
-  value       = var.create_app_engine && length(google_app_engine_application.app) > 0 ?
-                google_app_engine_application.app[0].url_dispatch_rule : null
+output "app_engine_url_dispatch_rule" {
+  description = "The App Engine URL dispatch rule"
+  value       = var.create_app_engine && length(google_app_engine_application.app) > 0 ? google_app_engine_application.app[0].url_dispatch_rule : null
 }
 
-# Firestore database information
+# Firestore Database Information
 output "firestore_database_name" {
-  description = "Name of the Firestore database"
-  value       = var.create_firestore_database && length(google_firestore_database.database) > 0 ?
-                google_firestore_database.database[0].name : var.database_name
+  description = "The name of the Firestore database"
+  value       = var.create_firestore_database && length(google_firestore_database.database) > 0 ? google_firestore_database.database[0].name : var.database_name
 }
 
 output "firestore_database_location" {
   description = "The location of the Firestore database"
-  value       = var.create_firestore_database && length(google_firestore_database.database) > 0 ?
-                google_firestore_database.database[0].location_id : var.database_location
+  value       = var.create_firestore_database && length(google_firestore_database.database) > 0 ? google_firestore_database.database[0].location_id : var.database_location
 }
 
 output "firestore_database_type" {
-  description = "The Firestore database type"
-  value       = var.create_firestore_database && length(google_firestore_database.database) > 0 ?
-                google_firestore_database.database[0].type : var.database_type
+  description = "The type of Firestore database"
+  value       = var.create_firestore_database && length(google_firestore_database.database) > 0 ? google_firestore_database.database[0].type : var.database_type
 }
 
 output "firestore_database_uid" {
-  description = "Firestore database unique ID"
-  value       = var.create_firestore_database && length(google_firestore_database.database) > 0 ?
-                google_firestore_database.database[0].uid : null
+  description = "The unique identifier of the Firestore database"
+  value       = var.create_firestore_database && length(google_firestore_database.database) > 0 ? google_firestore_database.database[0].uid : null
 }
 
 output "firestore_database_create_time" {
-  description = "Creation time of the database"
-  value       = var.create_firestore_database && length(google_firestore_database.database) > 0 ?
-                google_firestore_database.database[0].create_time : null
+  description = "The creation time of the Firestore database"
+  value       = var.create_firestore_database && length(google_firestore_database.database) > 0 ? google_firestore_database.database[0].create_time : null
 }
 
 output "firestore_database_update_time" {
-  description = "Last update time of the database"
-  value       = var.create_firestore_database && length(google_firestore_database.database) > 0 ?
-                google_firestore_database.database[0].update_time : null
+  description = "The last update time of the Firestore database"
+  value       = var.create_firestore_database && length(google_firestore_database.database) > 0 ? google_firestore_database.database[0].update_time : null
 }
 
 output "firestore_database_earliest_version_time" {
-  description = "Earliest version time of the Firestore DB"
-  value       = var.create_firestore_database && length(google_firestore_database.database) > 0 ?
-                google_firestore_database.database[0].earliest_version_time : null
+  description = "The earliest version time of the Firestore database"
+  value       = var.create_firestore_database && length(google_firestore_database.database) > 0 ? google_firestore_database.database[0].earliest_version_time : null
 }
 
 output "firestore_database_version_retention_period" {
-  description = "Version retention period"
-  value       = var.create_firestore_database && length(google_firestore_database.database) > 0 ?
-                google_firestore_database.database[0].version_retention_period : null
+  description = "The version retention period of the Firestore database"
+  value       = var.create_firestore_database && length(google_firestore_database.database) > 0 ? google_firestore_database.database[0].version_retention_period : null
 }
 
 output "firestore_database_etag" {
-  description = "ETag of the Firestore database"
-  value       = var.create_firestore_database && length(google_firestore_database.database) > 0 ?
-                google_firestore_database.database[0].etag : null
+  description = "The etag of the Firestore database"
+  value       = var.create_firestore_database && length(google_firestore_database.database) > 0 ? google_firestore_database.database[0].etag : null
 }
 
 output "firestore_database_key_prefix" {
-  description = "Database key prefix"
-  value       = var.create_firestore_database && length(google_firestore_database.database) > 0 ?
-                google_firestore_database.database[0].key_prefix : null
+  description = "The key prefix of the Firestore database"
+  value       = var.create_firestore_database && length(google_firestore_database.database) > 0 ? google_firestore_database.database[0].key_prefix : null
 }
 
-# Firestore indexes
+# Firestore Indexes Information
 output "firestore_indexes_created" {
   description = "List of created Firestore indexes"
-  value       = var.create_sample_indexes ? [
-                  google_firestore_index.user_status_index[*].id,
-                  google_firestore_index.order_timestamp_index[*].id
-                ] : []
+  value = var.create_sample_indexes ? [
+    {
+      name       = google_firestore_index.user_status_index[0].name
+      collection = google_firestore_index.user_status_index[0].collection
+      fields     = google_firestore_index.user_status_index[0].fields
+    },
+    {
+      name       = google_firestore_index.order_timestamp_index[0].name
+      collection = google_firestore_index.order_timestamp_index[0].collection
+      fields     = google_firestore_index.order_timestamp_index[0].fields
+    }
+  ] : []
 }
 
-# Connection info for SDK
+# Connection Information
 output "firestore_connection_info" {
-  description = "Connection information for Firestore SDK"
+  description = "Firestore connection information"
   value = {
-    project_id = var.project_id
-    database   = var.database_name
-    location   = var.database_location
-    type       = var.database_type
+    project_id    = var.project_id
+    database      = var.create_firestore_database && length(google_firestore_database.database) > 0 ? google_firestore_database.database[0].name : var.database_name
+    location      = var.create_firestore_database && length(google_firestore_database.database) > 0 ? google_firestore_database.database[0].location_id : var.database_location
+    type          = var.create_firestore_database && length(google_firestore_database.database) > 0 ? google_firestore_database.database[0].type : var.database_type
+    endpoint      = "https://firestore.googleapis.com/"
     emulator_host = "localhost:8080"
   }
 }
 
-# SDK example config
+# SDK Configuration Examples
 output "firestore_sdk_config" {
-  description = "Example SDK configuration"
+  description = "Configuration examples for different SDKs"
   value = {
     javascript = {
-      projectId = var.project_id
-      database  = var.database_name
+      firebase_config = {
+        projectId = var.project_id
+      }
+    }
+    admin_sdk = {
+      project_id  = var.project_id
+      database_url = "https://${var.project_id}.firebaseio.com"
     }
     python = {
-      import_code = "from google.cloud import firestore\nclient = firestore.Client(project=\"${var.project_id}\")"
+      client_init = "from google.cloud import firestore\\ndb = firestore.Client(project=\\"${var.project_id}\\")"
     }
+    java = {
+      client_init = "FirestoreOptions options = FirestoreOptions.newBuilder().setProjectId(\\"${var.project_id}\\").build();\\nFirestore db = options.getService();"
+    }
+    go = {
+      client_init = "client, err := firestore.NewClient(ctx, \\"${var.project_id}\\")"
+    }
+  }
+}
+
+# Monitoring and Logging
+output "firestore_monitoring_info" {
+  description = "Monitoring and logging information"
+  value = {
+    cloud_console_url = "https://console.cloud.google.com/firestore/databases/${var.create_firestore_database && length(google_firestore_database.database) > 0 ? google_firestore_database.database[0].name : var.database_name}/data?project=${var.project_id}"
+    metrics_url       = "https://console.cloud.google.com/monitoring/dashboards/resource;type=cloud_firestore_database;resource.database_id=${var.database_name}?project=${var.project_id}"
+    logs_url          = "https://console.cloud.google.com/logs/query;query=resource.type%3D%22firestore_database%22?project=${var.project_id}"
   }
 }
