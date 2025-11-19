@@ -25,8 +25,8 @@ on:
 env:
   TF_VERSION: "1.9.0"
   # Set these via repository secrets or organization-level variables for Workload Identity:
-  # WORKLOAD_IDENTITY_PROVIDER: projects/123/locations/global/workloadIdentityPools/...
-  # SERVICE_ACCOUNT: projects/.../serviceAccounts/terraform-github-deploy@...
+  # WORKLOAD_IDENTITY_PROVIDER: 'principal://iam.googleapis.com/projects/166457981312/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions'
+  # SERVICE_ACCOUNT: 'github-actions-deploy@myproject-non-prod.iam.gserviceaccount.com'
   # The workflow below assumes Workload Identity Federation (no JSON key stored in repo)
 
 jobs:
