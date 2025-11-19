@@ -20,8 +20,9 @@ on:
   #     - '**/*.tfvars'
   #     - 'environments/**'
   #     - '.github/workflows/firestore.yaml'
-workflow_dispatch:
-  inputs:
+  
+  workflow_dispatch:
+   inputs:
     environment:
       description: 'Environment to deploy (dev, stage, prod)'
       required: true
