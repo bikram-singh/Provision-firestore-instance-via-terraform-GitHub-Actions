@@ -14,7 +14,12 @@ database_name                 = "firestore-dev"
 database_location             = "us-central1"
 database_type                 = "FIRESTORE_NATIVE"
 concurrency_mode              = "OPTIMISTIC"
-create_sample_indexes         = true
+app_engine_integration_mode     = "DISABLED"
+point_in_time_recovery_enablement = "POINT_IN_TIME_RECOVERY_ENABLED"
+delete_protection_state         = "DELETE_PROTECTION_ENABLED"
+
+# Firestore features
+create_sample_indexes = true
 
 # Labels for resource management
 labels = {
