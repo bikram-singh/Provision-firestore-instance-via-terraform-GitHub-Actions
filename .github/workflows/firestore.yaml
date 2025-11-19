@@ -136,27 +136,27 @@ jobs:
       - name: Enable Required APIs
         run: |
           echo "Enabling required Google Cloud APIs..."
-          gcloud services enable firestore.googleapis.com --project=myproject-non-prod || echo "Firestore API already enabled or insufficient permissions"
-          gcloud services enable appengine.googleapis.com --project=myproject-non-prod || echo "App Engine API already enabled or insufficient permissions"
+          gcloud services enable firestore.googleapis.com --project=${{ env.PROJECT_ID }} || echo "Firestore API already enabled or insufficient permissions"
+          gcloud services enable appengine.googleapis.com --project=${{ env.PROJECT_ID }} || echo "App Engine API already enabled or insufficient permissions"
 
       - name: Create App Engine Application (if needed)
         run: |
           echo "Checking if App Engine application exists..."
-          if gcloud app describe --project=myproject-non-prod &>/dev/null; then
+          if gcloud app describe --project=${{ env.PROJECT_ID }} &>/dev/null; then
             echo "App Engine application already exists"
           else
             echo "Creating App Engine application..."
-            gcloud app create --region=us-central --project=myproject-non-prod || echo "Failed to create App Engine app or insufficient permissions"
+            gcloud app create --region=us-central --project=${{ env.PROJECT_ID }} || echo "Failed to create App Engine app or insufficient permissions"
           fi
 
       - name: Create Firestore Database (if needed)
         run: |
           echo "Checking if Firestore database exists..."
-          if gcloud firestore databases describe ${{ github.event.inputs.environment == 'dev' && 'firestore-dev' || github.event.inputs.environment == 'stage' && 'firestore-stage' || 'firestore-prod' }}  --project=myproject-non-prod &>/dev/null; then
+          if gcloud firestore databases describe ${{ github.event.inputs.environment == 'dev' && 'firestore-dev' || github.event.inputs.environment == 'stage' && 'firestore-stage' || 'firestore-prod' }}  --project=${{ env.PROJECT_ID }} &>/dev/null; then
             echo "Firestore database already exists"
           else
             echo "Creating Firestore database..."
-            gcloud firestore databases create  --database=${{ github.event.inputs.environment == 'dev' && 'firestore-dev' || github.event.inputs.environment == 'stage' && 'firestore-stage' || 'firestore-prod' }}  --location=us-central1  --type=firestore-native  --project=myproject-non-prod || echo "Failed to create Firestore database or insufficient permissions"
+            gcloud firestore databases create  --database=${{ github.event.inputs.environment == 'dev' && 'firestore-dev' || github.event.inputs.environment == 'stage' && 'firestore-stage' || 'firestore-prod' }}  --location=us-central1  --type=firestore-native  --project=${{ env.PROJECT_ID }} || echo "Failed to create Firestore database or insufficient permissions"
           fi
 
       - name: Terraform Init
