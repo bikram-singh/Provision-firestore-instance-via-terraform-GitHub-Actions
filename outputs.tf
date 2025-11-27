@@ -120,16 +120,27 @@ output "firestore_sdk_config" {
       database_url = "https://${var.project_id}.firebaseio.com"
     }
     python = {
-      client_init = "from google.cloud import firestore\\ndb = firestore.Client(project=\\"${var.project_id}\\")"
+      client_init = <<EOF
+from google.cloud import firestore
+db = firestore.Client(project="${var.project_id}")
+EOF
     }
     java = {
-      client_init = "FirestoreOptions options = FirestoreOptions.newBuilder().setProjectId(\\"${var.project_id}\\").build();\\nFirestore db = options.getService();"
+      client_init = <<EOF
+FirestoreOptions options = FirestoreOptions.newBuilder()
+    .setProjectId("${var.project_id}")
+    .build();
+Firestore db = options.getService();
+EOF
     }
     go = {
-      client_init = "client, err := firestore.NewClient(ctx, \\"${var.project_id}\\")"
+      client_init = <<EOF
+client, err := firestore.NewClient(ctx, "${var.project_id}")
+EOF
     }
   }
 }
+
 
 # Monitoring and Logging
 output "firestore_monitoring_info" {
