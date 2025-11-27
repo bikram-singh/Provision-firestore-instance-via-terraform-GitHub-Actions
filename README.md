@@ -453,10 +453,6 @@ Contributions are welcome! Please follow these guidelines:
 4. Review plan output in PR comments
 5. Merge to main to apply changes
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ## Resources
 
 - [Terraform Google Provider Documentation](https://registry.terraform.io/providers/hashicorp/google/latest/docs)
@@ -470,8 +466,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 For issues, questions, or contributions, please:
 - Open an issue in this repository
 - Contact: bikram-singh (GitHub)
-- Email: [Your Email]
-
 ---
 
 **Made with ❤️ by [Bikram Singh](https://github.com/bikram-singh)**
